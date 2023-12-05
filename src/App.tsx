@@ -2,10 +2,10 @@
 // import reactLogo from "./assets/react.svg";
 // import viteLogo from "/vite.svg";
 import "./App.css";
-import Endorsement from "./Endorsement";
-import EndorsementContainer from "./EndorsementContainer";
-import Form from "./Form";
-import Header from "./Header";
+import Endorsement from "./components/Endorsement";
+import EndorsementContainer from "./components/EndorsementContainer";
+import Form from "./components/Form";
+import Header from "./components/Header";
 
 function App() {
   // const [count, setCount] = useState(0);
