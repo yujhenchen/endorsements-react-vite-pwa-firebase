@@ -4,8 +4,7 @@ import { getDatabase } from "firebase/database";
 const firebaseConfig = {
   // ...
   // The value of `databaseURL` depends on the location of the database
-  databaseURL:
-    "https://jen-playground-c6f0c-default-rtdb.asia-southeast1.firebasedatabase.app",
+  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
 };
 
 // Initialize Firebase

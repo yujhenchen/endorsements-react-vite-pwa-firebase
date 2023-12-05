@@ -1,4 +1,4 @@
-import { database } from "../firebaseHelper";
+import { database } from "../firebase";
 import { getUserID } from "../helper";
 import { EndorsementData } from "../types";
 import { ref, set, get, child } from "firebase/database";

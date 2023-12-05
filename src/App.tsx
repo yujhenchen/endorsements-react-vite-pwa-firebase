@@ -7,7 +7,7 @@ import { EndorsementData } from "./types";
 import { ref, set, onValue } from "firebase/database";
 import { useEffect, useState } from "react";
 import { getUserID, setUserID } from "./helper";
-import { database } from "./firebaseHelper";
+import { database } from "./firebase";
 
 function App() {
   const [endorsementData, setEndorsementData] = useState<EndorsementData[]>([]);
