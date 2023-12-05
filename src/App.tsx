@@ -28,7 +28,7 @@ function App() {
 
         dataArray.push({ ...item, id: item.key });
       });
-      setEndorsementData(dataArray.reverse());
+      setEndorsementData(dataArray);
     });
   }, []);
 
