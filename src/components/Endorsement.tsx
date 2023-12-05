@@ -14,7 +14,7 @@ export default function Endorsement() {
         </p>
 
         <div className="flex space-x-2 items-center">
-          <i className="fa-solid fa-heart color-red"></i>
+          <i className="fa-solid fa-heart color-red fa-lg"></i>
           <span>16</span>
         </div>
       </div>
