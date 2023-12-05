@@ -4,33 +4,20 @@ import EndorsementContainer from "./components/EndorsementContainer";
 import Form from "./components/Form";
 import Header from "./components/Header";
 import { EndorsementData } from "./types";
-
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set, onValue } from "firebase/database";
+import { ref, set, onValue } from "firebase/database";
 import { useEffect, useState } from "react";
+import { getUserID, setUserID } from "./helper";
+import { database } from "./firebaseHelper";
 
 function App() {
   const [endorsementData, setEndorsementData] = useState<EndorsementData[]>([]);
-
-  const firebaseConfig = {
-    // ...
-    // The value of `databaseURL` depends on the location of the database
-    databaseURL:
-      "https://jen-playground-c6f0c-default-rtdb.asia-southeast1.firebasedatabase.app",
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-
-  // Initialize Realtime Database and get a reference to the service
-  const database = getDatabase(app);
 
   const endorsementsRef = ref(database, "endorsements/");
 
   useEffect(() => {
     return onValue(endorsementsRef, (snapshot) => {
       if (!snapshot.exists()) {
-        console.log("Cannot find snapshot");
+        // console.log("Cannot find snapshot");
         return;
       }
 
@@ -40,16 +27,21 @@ function App() {
         const item = childSnapshot.val();
         item.key = childSnapshot.key;
 
-        dataArray.push(item);
+        dataArray.push({ ...item, id: item.key });
       });
+      // console.log(dataArray);
       setEndorsementData(dataArray);
     });
   }, []);
 
-  function writeEndorsementData(data: EndorsementData) {
-    const { from, to, text, likedBy } = data;
+  useEffect(() => {
+    if (!getUserID()) setUserID(uuidv4());
+  }, []);
 
-    set(ref(database, `endorsements/${uuidv4()}`), {
+  function writeEndorsementData(data: EndorsementData) {
+    const { id, from, to, text, likedBy } = data;
+
+    set(ref(database, `endorsements/${id}`), {
       from: from,
       to: to,
       text: text,

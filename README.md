@@ -189,6 +189,22 @@ useEffect(() => {
   }, []);
 ```
 
+### Push empty array to firebase become undefined value
+
+#### Solution
+
+push boolean instead, make field `likedBy` to be `false` when the array is empty
+
+```
+export type EndorsementData = {
+    id: string;
+    from: string;
+    to: string;
+    text: string;
+    likedBy: string[] | boolean;
+};
+```
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- CONTRIBUTING -->

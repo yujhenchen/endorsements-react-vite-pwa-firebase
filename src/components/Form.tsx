@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { EndorsementData } from "../types";
+import { v4 as uuidv4 } from "uuid";
 
 type Props = {
   onSubmitForm: (endorsementData: EndorsementData) => void;
@@ -26,7 +27,13 @@ export default function Form({ onSubmitForm }: Props) {
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        onSubmitForm({ from: from, to: to, text: text, likedBy: [] });
+        onSubmitForm({
+          id: uuidv4(),
+          from: from,
+          to: to,
+          text: text,
+          likedBy: false,
+        });
       }}
     >
       <textarea
