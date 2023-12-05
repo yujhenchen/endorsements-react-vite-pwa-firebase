@@ -1,6 +1,34 @@
-export default function Form() {
+import { useState } from "react";
+import { EndorsementData } from "../types";
+
+type Props = {
+  onSubmitForm: (endorsementData: EndorsementData) => void;
+};
+
+export default function Form({ onSubmitForm }: Props) {
+  const [from, setFrom] = useState<string>("");
+  const [to, setTo] = useState<string>("");
+  const [text, setText] = useState<string>("");
+
+  function onChangeFrom(value: string): void {
+    setFrom(value);
+  }
+
+  function onChangeTo(value: string): void {
+    setTo(value);
+  }
+
+  function onChangeText(value: string): void {
+    setText(value);
+  }
+
   return (
-    <form>
+    <form
+      onSubmit={(event) => {
+        event.preventDefault();
+        onSubmitForm({ from: from, to: to, text: text, likedBy: [] });
+      }}
+    >
       <textarea
         id="content"
         className="box-border bg-#444059 text-#8F8F8F w-full m-0 p-0 rounded-8px h-118px invalid:tborder invalid:border-red"
@@ -8,6 +36,10 @@ export default function Form() {
         minLength={1}
         maxLength={77}
         required
+        value={text}
+        onChange={(event) => {
+          onChangeText(event.target.value);
+        }}
       ></textarea>
       <div className="box-border flex w-full py-2">
         <input
@@ -18,6 +50,10 @@ export default function Form() {
           minLength={1}
           maxLength={10}
           required
+          value={from}
+          onChange={(event) => {
+            onChangeFrom(event.target.value);
+          }}
         />
         <input
           id="to"
@@ -27,6 +63,10 @@ export default function Form() {
           minLength={1}
           maxLength={10}
           required
+          value={to}
+          onChange={(event) => {
+            onChangeTo(event.target.value);
+          }}
         />
       </div>
 
