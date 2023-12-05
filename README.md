@@ -120,10 +120,9 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 ## Roadmap
 
 - [x] Setup and ESLint, Prettier, Husky
-  - [x] Setup TypeScript
-- [ ] Setup UnoCSS
-- [ ] Setup Font Awesome
-- [ ] Setup Firebase
+- [x] Setup UnoCSS
+- [x] Setup Font Awesome
+- [x] Setup Firebase
 - [ ] Setup and config PWA
 - [ ] Form to input fields
 - [ ] Reverse cards order (latest should be on the top)
@@ -140,9 +139,55 @@ See the [open issues](https://github.com/yujhenchen/endorsements-react-vite-pwa-
 
 ## Issues and solutions
 
-### Issue
+### Incorrect data type when setting data array using `snapshot.val()` from `onValue` function of firebase
 
 #### Solution
+
+Extract `childSnapshot` from the `snapshot` object
+
+```
+const dataArray: EndorsementData[] = [];
+
+snapshot.forEach(function (childSnapshot) {
+    const item = childSnapshot.val();
+    item.key = childSnapshot.key;
+
+    dataArray.push(item);
+});
+```
+
+### `Uncaught Error: Too many re-renders. React limits the number of renders to prevent an infinite loop.` When update state in `onValue` function of firebase
+
+#### Solution
+
+Wrap `onValue` in `useEffect`,
+
+```
+const [endorsementData, setEndorsementData] = useState<EndorsementData[]>([]);
+
+...
+
+useEffect(() => {
+    return onValue(endorsementsRef, (snapshot) => {
+
+      if (!snapshot.exists()) {
+        console.log("Cannot find snapshot");
+        return;
+      }
+
+      const dataArray: EndorsementData[] = [];
+
+      snapshot.forEach(function (childSnapshot) {
+        const item = childSnapshot.val();
+        item.key = childSnapshot.key;
+
+        dataArray.push(item);
+      });
+
+      setEndorsementData(dataArray);
+    });
+  }, []);
+```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -187,6 +232,7 @@ Project Link: [https://github.com/yujhenchen/endorsements-react-vite-pwa-firebas
 ## Acknowledgments
 
 - [Scrimba](https://scrimba.com/)
+- [How to Connect Firebase Realtime Database to a React App](https://innovance.com.tr/how-to-connect-firebase-realtime-database-to-a-react-app/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
