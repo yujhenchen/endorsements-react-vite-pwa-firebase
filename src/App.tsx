@@ -17,7 +17,6 @@ function App() {
   useEffect(() => {
     return onValue(endorsementsRef, (snapshot) => {
       if (!snapshot.exists()) {
-        // console.log("Cannot find snapshot");
         return;
       }
 
@@ -29,7 +28,6 @@ function App() {
 
         dataArray.push({ ...item, id: item.key });
       });
-      // console.log(dataArray);
       setEndorsementData(dataArray);
     });
   }, []);

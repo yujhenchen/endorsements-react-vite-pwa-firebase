@@ -123,13 +123,14 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [x] Setup UnoCSS
 - [x] Setup Font Awesome
 - [x] Setup Firebase
-- [ ] Setup and config PWA
-- [ ] Form to input fields
+- [x] Form to input fields
+- [x] Like feature (same card can only be liked by the same person for one time, same person can like many cards)
 - [ ] Reverse cards order (latest should be on the top)
 - [ ] Whenever data table is changed in Firebase, render the cards
-- [ ] Like feature (same card can only be liked by the same person for one time, same person can like many cards)
+- [ ] Setup and config PWA
 - [ ] Refactor
   - [ ] Manage firebase related files
+  - [ ] Lazy load cards on scrolling to view
 
 See the [open issues](https://github.com/yujhenchen/endorsements-react-vite-pwa-firebase/issues) for a full list of proposed features (and known issues).
 

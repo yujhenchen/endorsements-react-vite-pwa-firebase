@@ -10,19 +10,28 @@ export default function Endorsement({
   text,
   likedBy,
 }: EndorsementData) {
+  function pushLike(endorsementID: string): void {
+    set(ref(database, `endorsements/${endorsementID}`), {
+      from: from,
+      to: to,
+      text: text,
+      likedBy: Array.isArray(likedBy)
+        ? [...likedBy, getUserID()]
+        : [getUserID()],
+    });
+  }
+
   function onLike(endorsementID: string): void {
-    let hasLikedCard = false;
     get(child(ref(database), `endorsements/${endorsementID}`))
       .then((snapshot) => {
         if (snapshot.exists()) {
           const endorsement: EndorsementData = snapshot.val();
-          console.log(endorsement);
+
           if (
-            Array.isArray(endorsement.likedBy) &&
-            endorsement.likedBy.includes(getUserID())
+            !Array.isArray(endorsement.likedBy) ||
+            !endorsement.likedBy.includes(getUserID())
           )
-            hasLikedCard = true;
-          else hasLikedCard = false;
+            pushLike(endorsementID);
         } else {
           console.log("No data available");
         }
@@ -30,17 +39,6 @@ export default function Endorsement({
       .catch((error) => {
         console.error(error);
       });
-
-    if (!hasLikedCard) {
-      set(ref(database, `endorsements/${endorsementID}`), {
-        from: from,
-        to: to,
-        text: text,
-        likedBy: Array.isArray(likedBy)
-          ? [...likedBy, getUserID()]
-          : [getUserID()],
-      });
-    }
   }
 
   return (
